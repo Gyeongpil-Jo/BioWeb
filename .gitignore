@@ -1,4 +1,7 @@
 server/.idea
 server/db.sqlite3
 server/__pycache__
-server/*pyc
+server/dna/__pycache__
+server/graphene/__pycache__
+server/home/__pycache__
+server/server/__pycache__
