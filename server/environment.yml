@@ -28,5 +28,3 @@ dependencies:
   - tzdata=2022g
   - wheel=0.38.4
   - xz=5.2.6
-  - gromacs=2021.3
-  - ambertools==22.0
