@@ -27,3 +27,7 @@ class GrapheneForm(forms.ModelForm):
         r = self.cleaned_data.get('radius')
         x = self.cleaned_data.get('size_x')
         y = self.cleaned_data.get('size_y')
+
+        if float(r) >= float(x)/2.0 or float(r) >= float(y)/2.0:
+            r = ''
+        return r

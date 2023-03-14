@@ -5,6 +5,8 @@ from django.http import HttpResponseNotAllowed, HttpResponse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+
 
 from .forms import GrapheneForm
 from .models import Graphene
@@ -16,6 +18,7 @@ import tarfile
 import os
 
 
+@csrf_exempt
 def input_graphene(request):
     if request.method == 'POST':
         form = GrapheneForm(request.POST)
@@ -25,7 +28,7 @@ def input_graphene(request):
             job.save()
             build_graphene(request, job_id=job.id)
 
-            return redirect('graphene:output', job_id=job.id)
+            return redirect('graphene:output_graphene', job_id=job.id)
 
     else:
         form = GrapheneForm()
@@ -33,12 +36,14 @@ def input_graphene(request):
     return render(request, 'graphene/input_graphene.html', context)
 
 
+@csrf_exempt
 def output_graphene(request, job_id):
     job = get_object_or_404(Graphene, pk=job_id)
     context = {'job': job}
     return render(request, 'graphene/output_graphene.html', context)
 
 
+@csrf_exempt
 def build_graphene(request, job_id):
     job = get_object_or_404(Graphene, pk=job_id)
     args = ['/usr/bin/perl', BASE_DIR / 'graphene/build_graphene.pl',
@@ -71,10 +76,11 @@ def build_graphene(request, job_id):
             pass
 
 
+@csrf_exempt
 def file_download(request, job_id):
     file_path = os.path.join(MEDIA_ROOT, 'jobs_graphene')
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(f'{job_id:06d}.tar.gz', 'rb'))
-    response['Content-Disposition'] = 'attachment; filename={}'.format("graphene.tar.gz")
+    response['Content-Disposition'] = 'attachment; filename=graphene.tar.gz'
 
     return response
