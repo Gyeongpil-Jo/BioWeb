@@ -5,6 +5,8 @@ WORKDIR /code
 
 SHELL ["/bin/bash", "--login", "-c"]
 
+RUN conda init
+
 # Create Conda environment from the YAML file
 COPY environment.yml .
 RUN conda env create -f environment.yml
