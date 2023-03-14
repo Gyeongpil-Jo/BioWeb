@@ -1,0 +1,4 @@
+server/.idea
+server/*.pyc
+server/__pycache__
+server/db.sqlite3
