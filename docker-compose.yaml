@@ -15,7 +15,5 @@ services:
     build:
       context: ./server/
       dockerfile: Dockerfile
-    volumes:
-      - ./server/:/code
     expose:
       - "8000"
