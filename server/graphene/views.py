@@ -81,6 +81,5 @@ def file_download(request, job_id):
     file_path = os.path.join(MEDIA_ROOT, 'jobs_graphene')
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(f'{job_id:06d}.tar.gz', 'rb'))
-    response['Content-Disposition'] = 'attachment; filename=graphene.tar.gz'
-
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format("graphene.tar")
     return response
